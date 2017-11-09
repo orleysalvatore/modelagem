@@ -10,7 +10,7 @@ typedef struct element{     // struct que define cada nó da lista
 } number;                   //renomeia a struct
 
 
-
+//teste
 
 void createHead (number *(*head), int FirstValue)   // função que cria o primeiro nó da lista
 {
