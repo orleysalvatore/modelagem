@@ -21,12 +21,14 @@ void createHead (number **head, int FirstValue)   // função que cria o primeiro 
     }
 }
 
-void createLeaf(number *lastLeaf, int value)    // função que aloca um novo nó da lista e salva o valor recebido dentro desse nó
+void createLeaf(number **lastLeaf, int value)    // função que aloca um novo nó da lista e salva o valor recebido dentro desse nó
 {
     number *newLeaf = (number *)malloc(sizeof(number));         //aloca e cria o novo nó
     newLeaf->value = value;
     newLeaf->neighbor=NULL;                             //salva valor dentro do nó
-    lastLeaf->neighbor = newLeaf;                       // atualiza a posicao do ultimo nó
+    (*lastLeaf)->neighbor = newLeaf;
+    *lastLeaf=newLeaf;
+                           // atualiza a posicao do ultimo nó
 }
 
 void generating (int a, int M, int control, int seed, int c, number *lastLeaf) // função recursiva que gera a cada recursão um novo valor aleatório
@@ -41,7 +43,7 @@ void generating (int a, int M, int control, int seed, int c, number *lastLeaf) /
         seed= (a*seed+c)%M;
         printf("%d\n",seed);                          //cria o novo numero
         createLeaf(lastLeaf, seed);                     //chama função para alocar o novo nó e salvar o valor na lista
-        generating(a,M,control-1,seed,c,lastLeaf);      //chama recursivamente e decrementa a quantidade de valores restates para gerar
+        generating(a,M,control-1,seed,c,&lastLeaf);      //chama recursivamente e decrementa a quantidade de valores restates para gerar
 
     }
 }
@@ -63,21 +65,21 @@ void gravNOtxt (number *lista) // função que pega a lista e grava dentro de um t
 
 int main(){                                                         //função principal que chama as outras
 number *head = NULL, *lastLeaf=NULL;                                //variaveis globais de inicialização
-int M,a=5, seed=8, c=1, op;
+int M,a=5, seed=8, c=3, op;
 
 number *last = NULL;
-
+/*
 createHead(&head, 1); last = head;
-createLeaf(last, 2);  last = last->neighbor;
-createLeaf(last, 3);  last = last->neighbor;
-createLeaf(last, 4);  last = last->neighbor;
-createLeaf(last, 5);  last = last->neighbor;
-createLeaf(last, 6);  last = last->neighbor;
+createLeaf(&last, 2);
+createLeaf(&last, 3);
+createLeaf(&last, 4);
+createLeaf(&last, 5);
+createLeaf(&last, 6);
 
 gravNOtxt(head);
 
 exit(1);
-
+*/
 
 printf("Informe a quantidade de numeros aleatorios desejado\n");    //pergunta a quantidade de numeros que deseja gerar
 scanf("%d",&M);                                                     // lê a quantidade
@@ -102,11 +104,11 @@ switch (op)                                                          //switch pa
         printf("Iforme o valor da semente\n");
         scanf("%d",&seed);
         head->value=seed;
-        generating(a, M,M+1, seed, c, lastLeaf);
+        generating(a, M,M, seed, c, &lastLeaf);
         break;
 
     case 2:                                                             //caso 2 ele mantem o valor da semente estipulado pelo programa e começa gerar
-        generating(a, M,M, seed, c, lastLeaf);
+        generating(a, M,M, seed, c, &lastLeaf);
         break;
 
     default:                                                            //se ele escolher uma opção invalida, ele ser redireciondo pelo GO TO para alinha 71
@@ -117,7 +119,14 @@ switch (op)                                                          //switch pa
 
 printf("\teste1\n");
 printf("%d\n", head);
-gravNOtxt(head);                                                        //pega lista criada e salta dentro de um arquivo nomeado "numeros.txt"
+gravNOtxt(head);
+printf("\n\n\n\n");
+
+while(head!= NULL)
+{
+    printf("%d\n",head->value);
+    head=head->neighbor;
+}//pega lista criada e salta dentro de um arquivo nomeado "numeros.txt"
 
 
 free(head);                                                                        //esse arquivo está na raiz do diretório do codigo fonte e o compilado
