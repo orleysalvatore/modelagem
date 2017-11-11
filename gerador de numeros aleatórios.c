@@ -3,7 +3,7 @@
 #include <stdlib.h> // usar a função malloc e free
 /*Os valores criados abaixo são numeros aleatórios baseados no algoritmo da congruência
 
-os hno serao chamados de folhas durante a descricao
+os nós serao chamados de folhas durante a descricao
 */
 
 
