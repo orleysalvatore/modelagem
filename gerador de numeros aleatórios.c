@@ -39,7 +39,8 @@ void generating (int a, int M, int control, int seed, int c, number *lastLeaf) /
                                                                                 // da cogruencia, control o valor restante de numeros a serem gerados,
                                                                                 //seed a semente ou valor atual, *lastLeaf -> ultima folha.
     if(control<=1){                         //condição de parada da recursao, caso a variavel de
-        printf("ACABOU !!!\n");             //printa para avisar que acabou
+        printf("ACABOU !!!\n\n");             //printa para avisar que acabou
+        printf("Procure na raiz de onde esta rodando o codigo, um txt 'numeros' que \nQue contem os valores gerados\n\n");
     }
     else
     {
@@ -75,7 +76,7 @@ lastLeaf = head;                                                    //ponteiro q
 
 
 voltar:                                                              //ponto de retorno do "GO TO" na linha 92
-printf("Deseja informar uma semente nova?\n");                       //pergunta se deseja informar uma semente nova
+printf("Deseja informar uma semente nova?\nAperte\n");                       //pergunta se deseja informar uma semente nova
 printf("(1) -> sim\n");                                              //informa as opcoes
 printf("(2) -> nao\n");                                              //aperta 1 para sim ou aperta 2 para nao
 scanf("%d",&op);                                                      //le a opcao escolhida
