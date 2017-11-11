@@ -1,30 +1,30 @@
-#include <stdio.h> //Para usar funções de entrada e saida do teclado e tela
+#include <stdio.h> //Para usar funÃ§Ãµes de entrada e saida do teclado e tela
 #include <stddef.h> // para usar constante NULL
-#include <math.h> // para usar a função ceil
-#include <stdlib.h> // usar a função malloc
-/*Os valores criados abaixo são numeros aleatórios baseados no algoritmo da congruência
+#include <math.h> // para usar a funÃ§Ã£o ceil
+#include <stdlib.h> // usar a funÃ§Ã£o malloc e free
+/*Os valores criados abaixo sÃ£o numeros aleatÃ³rios baseados no algoritmo da congruÃªncia
 
 os hno serao chamados de folhas durante a descricao
 */
 
 
 typedef struct element{     // struct que define cada folha da lista
-    int value;                  //variavel q slta o numero aleatório inteiro
+    int value;                  //variavel q slta o numero aleatÃ³rio inteiro
     struct element *neighbor;   //aponta para a proxima folha
 } number;                   //renomeia a struct para number
 
 
-void createHead (number **head, int FirstValue)   // função que cria o primeiro nó da lista
+void createHead (number **head, int FirstValue)   // funÃ§Ã£o que cria o primeiro nÃ³ da lista
 {
 
-    if((*head) == NULL){                               //verifica se é nullo, se for nulo ele cria o primeiro nó com
+    if((*head) == NULL){                               //verifica se Ã© nullo, se for nulo ele cria o primeiro nÃ³ com
         (*head) = (number *)malloc(sizeof(number));        //o valor da semente inicial
-        (*head)->value=FirstValue;                          //salva o valor da semente no no cabeça
+        (*head)->value=FirstValue;                          //salva o valor da semente no no cabeÃ§a
         (*head)->neighbor = NULL;
     }
 }
 
-void createLeaf(number **lastLeaf, int value)                    // função que aloca um novo no da lista e salva o valor recebido dentro desse nó
+void createLeaf(number **lastLeaf, int value)                    // funÃ§Ã£o que aloca um novo no da lista e salva o valor recebido dentro desse nÃ³
 {
     number *newLeaf = (number *)malloc(sizeof(number));         //aloca e cria a nova folha
     newLeaf->value = value;                                     //salva valor dentro da folha
@@ -34,12 +34,12 @@ void createLeaf(number **lastLeaf, int value)                    // função que a
 
 }
 
-void generating (int a, int M, int control, int seed, int c, number *lastLeaf) // função recursiva que gera a cada recursão um novo valor aleatório
+void generating (int a, int M, int control, int seed, int c, number *lastLeaf) // funÃ§Ã£o recursiva que gera a cada recursÃ£o um novo valor aleatÃ³rio
 {                                                                              // e e chama a funcao createleaf para alocar em uma lista dinamica, os
                                                                                 //parametros desta funcao sao: (a, M, c) valores necessarios para o calculo
                                                                                 // da cogruencia, control o valor restante de numeros a serem gerados,
                                                                                 //seed a semente ou valor atual, *lastLeaf -> ultima folha.
-    if(control<=1){                         //condição de parada da recursao, caso a variavel de
+    if(control<=1){                         //condiÃ§Ã£o de parada da recursao, caso a variavel de
         printf("ACABOU !!!\n");             //printa para avisar que acabou
     }
     else
@@ -50,7 +50,7 @@ void generating (int a, int M, int control, int seed, int c, number *lastLeaf) /
     }                                                   //eh a quantidade de numeros restantes a serem gerados
 }
 
-void gravNOtxt (number *lista) // função que pega a lista e grava dentro de um txt
+void gravNOtxt (number *lista) // funÃ§Ã£o que pega a lista e grava dentro de um txt
 {
 
     FILE *arq;                          //cria ponterio do tipo arquivo
@@ -63,14 +63,14 @@ void gravNOtxt (number *lista) // função que pega a lista e grava dentro de um t
     }
 }
 
-int main(){                                                         //função principal que chama as outras
-number *head = NULL, *lastLeaf=NULL;                                //variaveis globais de inicialização, ponterios que controlam a lista
+int main(){                                                         //funÃ§Ã£o principal que chama as outras
+number *head = NULL, *lastLeaf=NULL;                                //variaveis globais de inicializaÃ§Ã£o, ponterios que controlam a lista
 int M,a=5, seed=8, c=3, op;                                         //variaveis para uso da funcao de congruencia e "op" para uso de um switch
 
 printf("Informe a quantidade de numeros aleatorios desejado\n");    //pergunta a quantidade de numeros que deseja gerar
-scanf("%d",&M);                                                     // lê a quantidade
+scanf("%d",&M);                                                     // lÃª a quantidade
 
-createHead(&head,seed);                                             //criar a lista com a cabeça
+createHead(&head,seed);                                             //criar a lista com a cabeÃ§a
 lastLeaf = head;                                                    //ponteiro que vai salvar uma copia para percorrer a lista
 
 
@@ -83,18 +83,18 @@ scanf("%d",&op);                                                      //le a opc
 
 switch (op)                                                          //switch para avaliar a escolha e executar de acordo com a escolha
 {
-    case 1:                                                          // caso 1, ele atualiza o novo valor da semente e começa a gerar
+    case 1:                                                          // caso 1, ele atualiza o novo valor da semente e comeÃ§a a gerar
         printf("Iforme o valor da semente\n");
         scanf("%d",&seed);
         head->value=seed;
         generating(a, M,M, seed, c, &lastLeaf);
         break;
 
-    case 2:                                                             //caso 2 ele mantem o valor da semente estipulado pelo programa e começa gerar
+    case 2:                                                             //caso 2 ele mantem o valor da semente estipulado pelo programa e comeÃ§a gerar
         generating(a, M,M, seed, c, &lastLeaf);
         break;
 
-    default:                                                            //se ele escolher uma opção invalida, ele sera redireciondo pelo GO TO para alinha 71
+    default:                                                            //se ele escolher uma opÃ§Ã£o invalida, ele sera redireciondo pelo GO TO para alinha 71
         printf("Valor invalido\n");
         goto voltar;                                                    //faz voltar o processo de escolha
         break;
