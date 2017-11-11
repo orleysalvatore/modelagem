@@ -2,101 +2,84 @@
 #include <stddef.h> // para usar constante NULL
 #include <math.h> // para usar a função ceil
 #include <stdlib.h> // usar a função malloc
-/*Os valores criados abaixo são numeros aleatórios baseados no algoritmo da congruência*/
+/*Os valores criados abaixo são numeros aleatórios baseados no algoritmo da congruência
 
-typedef struct element{     // struct que define cada nó da lista
+os hno serao chamados de folhas durante a descricao
+*/
+
+
+typedef struct element{     // struct que define cada folha da lista
     int value;                  //variavel q slta o numero aleatório inteiro
-    struct element *neighbor;   //aponta para o proximo nó
-} number;                   //renomeia a struct
+    struct element *neighbor;   //aponta para a proxima folha
+} number;                   //renomeia a struct para number
 
 
 void createHead (number **head, int FirstValue)   // função que cria o primeiro nó da lista
 {
-    printf("%d\n", *head);
+
     if((*head) == NULL){                               //verifica se é nullo, se for nulo ele cria o primeiro nó com
         (*head) = (number *)malloc(sizeof(number));        //o valor da semente inicial
-        (*head)->value=FirstValue;                          //salva o valor da semente no nó cabeça
+        (*head)->value=FirstValue;                          //salva o valor da semente no no cabeça
         (*head)->neighbor = NULL;
-        printf("%d\n",*head);
     }
 }
 
-void createLeaf(number **lastLeaf, int value)    // função que aloca um novo nó da lista e salva o valor recebido dentro desse nó
+void createLeaf(number **lastLeaf, int value)                    // função que aloca um novo no da lista e salva o valor recebido dentro desse nó
 {
-    number *newLeaf = (number *)malloc(sizeof(number));         //aloca e cria o novo nó
-    newLeaf->value = value;
-    newLeaf->neighbor=NULL;                             //salva valor dentro do nó
-    (*lastLeaf)->neighbor = newLeaf;
-    *lastLeaf=newLeaf;
-                           // atualiza a posicao do ultimo nó
+    number *newLeaf = (number *)malloc(sizeof(number));         //aloca e cria a nova folha
+    newLeaf->value = value;                                     //salva valor dentro da folha
+    newLeaf->neighbor=NULL;                                     //atrinui valor nulo para proximo
+    (*lastLeaf)->neighbor = newLeaf;                            //Aponta o proximo como sendo a nova folha
+    (*lastLeaf)=newLeaf;                                        // atualiza a posicao da ultima folha
+
 }
 
 void generating (int a, int M, int control, int seed, int c, number *lastLeaf) // função recursiva que gera a cada recursão um novo valor aleatório
-{
-
-    if(control<=1){                         //condição de parada da recursão
-        printf("%d\n",M);
-        printf("ACABOU !!!\n");
+{                                                                              // e e chama a funcao createleaf para alocar em uma lista dinamica, os
+                                                                                //parametros desta funcao sao: (a, M, c) valores necessarios para o calculo
+                                                                                // da cogruencia, control o valor restante de numeros a serem gerados,
+                                                                                //seed a semente ou valor atual, *lastLeaf -> ultima folha.
+    if(control<=1){                         //condição de parada da recursao, caso a variavel de
+        printf("ACABOU !!!\n");             //printa para avisar que acabou
     }
     else
     {
-        seed= (a*seed+c)%M;
-        printf("%d\n",seed);                          //cria o novo numero
-        createLeaf(lastLeaf, seed);                     //chama função para alocar o novo nó e salvar o valor na lista
-        generating(a,M,control-1,seed,c,&lastLeaf);      //chama recursivamente e decrementa a quantidade de valores restates para gerar
-
-    }
+        seed= (a*seed+c)%M;                             //gera um novo numero baseado no calculo da congruencia
+        createLeaf(&lastLeaf, seed);                    //chama funcao para alocar o valor na lista
+        generating(a,M,control-1,seed,c,lastLeaf);      //chama recursivamente e decrementa o parametro "control" em menos 1, que
+    }                                                   //eh a quantidade de numeros restantes a serem gerados
 }
 
 void gravNOtxt (number *lista) // função que pega a lista e grava dentro de um txt
 {
-    printf("teste2\n");
-    printf("%d\n", lista);
-    FILE *arq;
-    arq = fopen("numeros.txt", "wt");
 
-    while (lista != NULL)
+    FILE *arq;                          //cria ponterio do tipo arquivo
+    arq = fopen("numeros.txt", "wt");   // abre ou cria um arquivo "numeros.txt" para escrever os valores dentro deste txt
+
+    while (lista != NULL)                   // enquanto nao lista nao estiver no fim ela vai entrar para imprimir
     {
-        fprintf(arq,"%d\n",lista->value);
-        lista=lista->neighbor;
+        fprintf(arq,"%d\n",lista->value);   //Escreve dentro do arquivo
+        lista=lista->neighbor;              //Aponta para a proxima folha.
     }
-
 }
 
 int main(){                                                         //função principal que chama as outras
-number *head = NULL, *lastLeaf=NULL;                                //variaveis globais de inicialização
-int M,a=5, seed=8, c=3, op;
-
-number *last = NULL;
-/*
-createHead(&head, 1); last = head;
-createLeaf(&last, 2);
-createLeaf(&last, 3);
-createLeaf(&last, 4);
-createLeaf(&last, 5);
-createLeaf(&last, 6);
-
-gravNOtxt(head);
-
-exit(1);
-*/
+number *head = NULL, *lastLeaf=NULL;                                //variaveis globais de inicialização, ponterios que controlam a lista
+int M,a=5, seed=8, c=3, op;                                         //variaveis para uso da funcao de congruencia e "op" para uso de um switch
 
 printf("Informe a quantidade de numeros aleatorios desejado\n");    //pergunta a quantidade de numeros que deseja gerar
 scanf("%d",&M);                                                     // lê a quantidade
 
-createHead(&head,seed);
-
-printf("oficial %d\n",head);                                              //criar a lista com a cabeça
-lastLeaf = head;
-                                                //nós que vai ser passado para correr na lista
+createHead(&head,seed);                                             //criar a lista com a cabeça
+lastLeaf = head;                                                    //ponteiro que vai salvar uma copia para percorrer a lista
 
 
 
 voltar:                                                              //ponto de retorno do "GO TO" na linha 92
 printf("Deseja informar uma semente nova?\n");                       //pergunta se deseja informar uma semente nova
-printf("(1) -> sim\n");                                              //informa as opções
-printf("(2) -> nao\n");
-scanf("%d",&op);
+printf("(1) -> sim\n");                                              //informa as opcoes
+printf("(2) -> nao\n");                                              //aperta 1 para sim ou aperta 2 para nao
+scanf("%d",&op);                                                      //le a opcao escolhida
 
 switch (op)                                                          //switch para avaliar a escolha e executar de acordo com a escolha
 {
@@ -111,26 +94,15 @@ switch (op)                                                          //switch pa
         generating(a, M,M, seed, c, &lastLeaf);
         break;
 
-    default:                                                            //se ele escolher uma opção invalida, ele ser redireciondo pelo GO TO para alinha 71
+    default:                                                            //se ele escolher uma opção invalida, ele sera redireciondo pelo GO TO para alinha 71
         printf("Valor invalido\n");
         goto voltar;                                                    //faz voltar o processo de escolha
         break;
 }
 
-printf("\teste1\n");
-printf("%d\n", head);
-gravNOtxt(head);
-printf("\n\n\n\n");
-
-while(head!= NULL)
-{
-    printf("%d\n",head->value);
-    head=head->neighbor;
-}//pega lista criada e salta dentro de um arquivo nomeado "numeros.txt"
+gravNOtxt(head);                                                        //funcao que salva todos os valores da lista em um arquivo
 
 
-free(head);                                                                        //esse arquivo está na raiz do diretório do codigo fonte e o compilado
-return 0;                                                               //txt criado em tempo de execução
+free(head);                                                             //libera a memoria alocada pela lista
+return 0;
 }
-
-
