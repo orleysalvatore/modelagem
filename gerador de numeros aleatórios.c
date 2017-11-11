@@ -1,6 +1,5 @@
 #include <stdio.h> //Para usar funções de entrada e saida do teclado e tela
 #include <stddef.h> // para usar constante NULL
-#include <math.h> // para usar a função ceil
 #include <stdlib.h> // usar a função malloc e free
 /*Os valores criados abaixo são numeros aleatórios baseados no algoritmo da congruência
 
