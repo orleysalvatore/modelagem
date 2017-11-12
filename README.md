@@ -1,7 +1,7 @@
 # modelagem
 #Trabalho de Modelagem e Simulação da facudade FUCAPI
 Alunos:
-	Orley do Amaral Ferreira
+	Orley do Amaral Ferreira;
 	Cristian Veiga
 
 
