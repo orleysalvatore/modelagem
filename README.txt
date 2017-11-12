@@ -6,6 +6,8 @@ Alunos:
 	O programa é um gerador de números pseudo-aleatórios baseado na técnica da congruência.
 	O códiog tem q ser copiado e executado na máquina local.
 	Após a execução o programa gera um arquivo no formato de txt para salvar os numeros gerados.
+	A escolha do valor da semente(valor incial) é optativo ao usuário, caso nao queira informa um novo valor, o valor padrao do código é "8".
+	O valor da quantidade requisitada de numeros aleatório será o valor de M usado no codigo da congruencia.
 
 Sobre o programa:
 	Construido em linguam C, usa uma função para gerar os valores
