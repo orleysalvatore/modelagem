@@ -1,5 +1,5 @@
 # modelagem
-Trabalho de Modelagem e Simulação da facudade FUCAPI
+#Trabalho de Modelagem e Simulação da facudade FUCAPI
 Alunos:
 	Orley do Amaral Ferreira
 	Cristian Veiga
